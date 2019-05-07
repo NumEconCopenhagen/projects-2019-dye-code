@@ -1,6 +1,7 @@
 # a. Import Packages
 %matplotlib inline
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from ipywidgets import interact, fixed
 
@@ -48,7 +49,7 @@ e1, e2 = 80, 20
 rmin, rmax = 0, 1
 cmax = 150
 
-# d. Defining plotting function for inter
+# d. Defining plotting function
 def cons_plot(r, delta, alpha, e1, e2):
     """ This function will create a graph of the intertemporal utility and the budget constraint
     """
@@ -77,7 +78,7 @@ def cons_plot(r, delta, alpha, e1, e2):
     ax.grid()
     plt.show()
 
-# e. Define function that returns allocation as a pandas frame 
+# e. Define function that returns allocation as a pandas frame and graph
 def allocation():
     c1e, c2e, uebar = solve_opt(r, alpha, delta, e1, e2)
     
@@ -96,4 +97,15 @@ def allocation():
 
     return df
 
+# f.1 Allocation in the saving case
 allocation()
+cons_plot(r, delta, alpha, e1, e2)
+
+# f.2 Allocation in the borrowing case
+e1,e2 = 20,80
+allocation()
+cons_plot(r, delta, alpha, e1, e2)
+
+
+# g. interactive graph - can ONLY be used in the notebook
+interact(cons_plot, r=(rmin,rmax,0.1), alpha=fixed(alpha), delta=(0.5,1,0.1), e1=(10,100,1), e2=(10,100,1));
